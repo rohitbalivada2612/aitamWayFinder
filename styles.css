@@ -78,58 +78,57 @@ a{ color:inherit; }
 /* Reads like a building nameboard: crest-left, department name centred on
    its own line, jubilee seal right, thin gold sill underneath. */
 
-.site-header{
-  background:var(--navy);
-  color:#fff;
-  border-bottom:3px solid var(--gold);
-}
+.site-header{ background:var(--navy); color:#fff; border-bottom:3px solid var(--gold); }
 .site-header .wrap{
   display:flex;
   align-items:center;
-  gap:18px;
-  padding-top:12px;
-  padding-bottom:12px;
-  flex-wrap:wrap;
+  gap:clamp(10px, 3vw, 20px);
+  padding-top:10px;
+  padding-bottom:10px;
+  flex-wrap:nowrap;               /* never wrap — everything shrinks to fit instead */
 }
 .brand-logo{
-  height:70px;
+  height:clamp(28px, 8vw, 70px);   /* scales with viewport, no separate mobile rule needed */
   width:auto;
   background:#fff;
-  padding:6px 10px;
+  padding:4px 8px;
   border-radius:7px;
   flex:none;
 }
 .brand-text{
   display:flex;
   flex-direction:column;
-  gap:2px;
-  margin-right:auto;
-  margin-left:150px;
-  min-width:0px;
+  gap:1px;
+  flex:1 1 auto;                  /* fills the space between logo and badge */
+  min-width:0;                    /* lets ellipsis work inside a flex child */
+  text-align:center;
 }
 .brand-text .eyebrow-mini{
   font-family:var(--font-mono);
-  font-size:.9rem;
-  letter-spacing:.12em;
+  font-size:clamp(.55rem, 1.6vw, .68rem);
+  letter-spacing:.1em;
   text-transform:uppercase;
-  text-align:center;
   color:var(--gold-light);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 .brand-text .dept{
   font-family:var(--font-display);
-  font-size:1.8rem;
+  font-size:clamp(.95rem, 4.2vw, 1.5rem);
   font-weight:600;
   letter-spacing:.2px;
-  text-align:center;
-  white-space:nowrap;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 .brand-text .college{
-  font-size:.76rem;
+  font-size:clamp(.6rem, 1.8vw, .78rem);
   color:#C7CEDE;
-  text-align:center;
-  letter-spacing:.3px;
+  letter-spacing:.2px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
-.jubilee-badge{ height:120px; width:auto; flex:none; }
+.jubilee-badge{
+  height:clamp(30px, 9vw, 84px);   /* scales down instead of forcing the row to wrap */
+  width:auto;
+  flex:none;
+}
 
 /* ------------------------------------------------------------------ hero */
 
@@ -772,12 +771,6 @@ a{ color:inherit; }
 }
 
 @media (max-width:640px){
-  .site-header .wrap{ gap:10px; padding-top:10px; padding-bottom:10px; }
-  .brand-logo{ height:32px; padding:5px 8px; }
-  .jubilee-badge{ height:42px; }
-  .brand-text .dept{ font-size:1rem; }
-  .brand-text .college{ font-size:.68rem; }
-
   .hero{ padding:32px 0 28px; }
   .search-box input{ font-size:1rem; }
   .stat-strip{ gap:16px; }
@@ -806,4 +799,9 @@ a{ color:inherit; }
   .faculty-grid{ grid-template-columns:repeat(2, 1fr); }
   .lift-panel{ gap:8px; padding:8px; }
   .lift-button{ width:44px; height:44px; }
+}
+
+@media (max-width:400px){
+  .brand-text .eyebrow-mini,
+  .brand-text .college{ display:none; }   /* only "EEE Wayfinder" survives on very narrow phones */
 }
