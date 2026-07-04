@@ -541,11 +541,13 @@ a{ color:inherit; }
 }
 .board-row .row-main{ min-width:0; flex:1; }
 .board-row .row-title{
+  display:block;
   font-size:.92rem;
   font-weight:600;
   overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 }
 .board-row .row-sub{
+  display:block;
   font-size:.74rem;
   color:#9DA6C2;
   overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
