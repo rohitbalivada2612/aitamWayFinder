@@ -62,6 +62,9 @@ const ROOMS = [
   { code:"FF-04", floor:"first", type:"office", title:"Faculty Cabin", occupants:[
       { name:"Dr. Ch. Ravikumar", designation:"Faculty", qualification:"M.E., Ph.D.", photo:"ch-ravikumar" },
     ], tags:[] },
+  { code:"FF-05", floor:"first", type:"office", title:"Faculty Cabin", occupants:[
+      { name:"Dr. Pydi Bala Murali", designation:"Associate Professor", qualification:"Ph.D.", photo:"pydi-bala-murali" },
+    ], tags:[] },
   { code:"FF-06", floor:"first", type:"office", title:"Faculty Cabin", occupants:[
       { name:"Dr. S. Nagaraju", designation:"Faculty", qualification:"M.Tech, Ph.D.", photo:"s-nagaraju" },
       { name:"B. Srikanth", designation:"Faculty", qualification:"M.Tech", photo:"b-srikanth" },
@@ -105,6 +108,9 @@ const ROOMS = [
     ], tags:[] },
   { code:"SF-05", floor:"second", type:"office", title:"Faculty Cabin", occupants:[
       { name:"N. Tejeswararao", designation:"Faculty", qualification:"M.Tech", photo:"n-tejeswararao" },
+    ], tags:[] },
+  { code:"SF-06", floor:"second", type:"office", title:"Faculty Cabin", occupants:[
+      { name:"Kalla Kanakaraju", designation:"Assistant Professor", qualification:"M.Tech", photo:"k-kanakaraju" },
     ], tags:[] },
   { code:"SF-07", floor:"second", type:"office", title:"Faculty Cabin", occupants:[
       { name:"Dr. G. Ramarao", designation:"Faculty", qualification:"M.Tech, Ph.D.", photo:"g-ramarao" },
