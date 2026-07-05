@@ -31,8 +31,8 @@ const FLOORS = [
 // Physical left-to-right corridor order used to draw the wayfinding strip.
 const FLOOR_ORDER = {
   ground: ["GF-01","GF-02","GF-03","GF-04","GF-05","GF-06","GF-07","GF-08","GF-09","GF-10"],
-  first:  ["FF-01","FF-02","FF-03","FF-04","FF-06","FF-07","FF-08","FF-09","FF-10","FF-11","FF-12","FF-13","FF-14","FF-15","FF-16","FF-17","FF-18"],
-  second: ["SF-01","SF-02","SF-03","SF-04","SF-05","SF-07","SF-08","SF-09","SF-10","SF-11","SF-12","SF-13","SF-14","SF-15","SF-16","SF-17","SF-18"],
+  first:  ["FF-01","FF-02","FF-03","FF-04","FF-05","FF-06","FF-07","FF-08","FF-09","FF-10","FF-11","FF-12","FF-13","FF-14","FF-15","FF-16","FF-17","FF-18"],
+  second: ["SF-01","SF-02","SF-03","SF-04","SF-05","SF-06","SF-07","SF-08","SF-09","SF-10","SF-11","SF-12","SF-13","SF-14","SF-15","SF-16","SF-17","SF-18"],
 };
 
 // type controls the icon + accent color used across the UI
