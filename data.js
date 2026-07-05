@@ -52,37 +52,37 @@ const ROOMS = [
 
   // ---------------- FIRST FLOOR ----------------
   { code:"FF-01", floor:"first", type:"office", title:"HOD (EEE) Cabin", occupants:[
-      { name:"Dr. D. Vijay Kumar", designation:"Head of the Department", qualification:"M.E., Ph.D.", photo:"hod-d-vijay-kumar" },
+      { name:"Dr. D. Vijay Kumar", designation:"Professor & HOD", qualification:"M.E., Ph.D.", photo:"hod-d-vijay-kumar" },
     ], tags:["hod","head of department"] },
   { code:"FF-02", floor:"first", type:"office", title:"Dept. Office", occupants:[], tags:["office","admin","department office"] },
   { code:"FF-03", floor:"first", type:"office", title:"Faculty Cabin", occupants:[
-      { name:"Dr. S. Kumara Swamy", designation:"Faculty", qualification:"M.Tech, Ph.D.", photo:"s-kumara-swamy" },
-      { name:"K. Suneel Gowtham", designation:"Faculty", qualification:"M.Tech", photo:"k-suneel-gowtham" },
+      { name:"Dr. S. Kumara Swamy", designation:"Assistant Professor", qualification:"M.Tech, Ph.D.", photo:"s-kumara-swamy" },
+      { name:"K. Suneel Gowtham", designation:"Assistant Professor", qualification:"M.Tech", photo:"k-suneel-gowtham" },
     ], tags:[] },
   { code:"FF-04", floor:"first", type:"office", title:"Faculty Cabin", occupants:[
-      { name:"Dr. Ch. Ravikumar", designation:"Faculty", qualification:"M.E., Ph.D.", photo:"ch-ravikumar" },
+      { name:"Dr. Ch. Ravikumar", designation:"Professor", qualification:"M.E., Ph.D.", photo:"ch-ravikumar" },
     ], tags:[] },
   { code:"FF-05", floor:"first", type:"office", title:"Faculty Cabin", occupants:[
       { name:"Dr. Pydi Bala Murali", designation:"Associate Professor", qualification:"Ph.D.", photo:"pydi-bala-murali" },
     ], tags:[] },
   { code:"FF-06", floor:"first", type:"office", title:"Faculty Cabin", occupants:[
-      { name:"Dr. S. Nagaraju", designation:"Faculty", qualification:"M.Tech, Ph.D.", photo:"s-nagaraju" },
-      { name:"B. Srikanth", designation:"Faculty", qualification:"M.Tech", photo:"b-srikanth" },
+      { name:"Dr. S. Nagaraju", designation:"Associate Professor", qualification:"M.Tech, Ph.D.", photo:"s-nagaraju" },
+      { name:"B. Srikanth", designation:"Assistant Professor", qualification:"M.Tech", photo:"b-srikanth" },
     ], tags:[] },
   { code:"FF-07", floor:"first", type:"office", title:"Faculty Cabin", occupants:[
-      { name:"Dr. B.B Rath", designation:"Faculty", qualification:"M.Tech, Ph.D.", photo:"bb-rath" },
-      { name:"N. Sowjanya", designation:"Faculty", qualification:"M.Tech", photo:"n-sowjanya" },
+      { name:"Dr. B.B Rath", designation:"Associate Professor", qualification:"M.Tech, Ph.D.", photo:"bb-rath" },
+      { name:"N. Sowjanya", designation:"Assistant Professor", qualification:"M.Tech", photo:"n-sowjanya" },
     ], tags:[] },
   { code:"FF-08", floor:"first", type:"library", title:"Dept. Library", occupants:[], tags:["library","books"] },
   { code:"FF-09", floor:"first", type:"classroom", title:"Empty Classroom", occupants:[], tags:["classroom","free room"] },
   { code:"FF-10", floor:"first", type:"lab", title:"R&D Lab / Modernization of Electrical Machines Lab (AICTE Sponsored Lab)", occupants:[], tags:["r&d","modernization","electrical machines","aicte"] },
   { code:"FF-11", floor:"first", type:"office", title:"Faculty Cabin", occupants:[
-      { name:"Dr. B. Srinivasa Rao", designation:"Faculty", qualification:"M.Tech, Ph.D., MISTE, MIRED", photo:"b-srinivasa-rao" },
+      { name:"Dr. B. Srinivasa Rao", designation:"Assistant Professor", qualification:"M.Tech, Ph.D., MISTE, MIRED", photo:"b-srinivasa-rao" },
       { name:"T. Lokanadham", designation:"Assistant Professor", qualification:"M.Tech", photo:"t-lokanadham" },
       { name:"M.V.V. Appala Naidu", designation:"Assistant Professor", qualification:"M.Tech", photo:"mvv-appala-naidu" },
       { name:"G. Ashok", designation:"Assistant Professor", qualification:"M.Tech, Ph.D.", photo:"g-ashok" },
-      { name:"Ch. Krishna Rao", designation:"Assistant Professor", qualification:"M.Tech", photo:"ch-krishna-rao" },
-      { name:"B. Manmadha Rao", designation:"Assistant Professor", qualification:"M.Tech", photo:"b-manmadha-rao" },
+      { name:"Ch. Krishna Rao", designation:"Associate Professor", qualification:"M.Tech", photo:"ch-krishna-rao" },
+      { name:"B. Manmadha Rao", designation:"Sr.Assistant Professor", qualification:"M.Tech", photo:"b-manmadha-rao" },
       { name:"Dr. Srinivasa Acharya", designation:"Assistant Professor", qualification:"M.Tech, Ph.D.", photo:"srinivasa-acharya" },
     ], tags:[] },
   { code:"FF-12", floor:"first", type:"classroom", title:"Final Year EEE — Section A", occupants:[], tags:["final year","4th year","class a"] },
@@ -95,26 +95,26 @@ const ROOMS = [
 
   // ---------------- SECOND FLOOR ----------------
   { code:"SF-01", floor:"second", type:"office", title:"Faculty Cabin", occupants:[
-      { name:"B. Ravi Kumar", designation:"Faculty", qualification:"M.Tech", photo:"b-ravi-kumar" },
+      { name:"B. Ravi Kumar", designation:"Assistant Professor", qualification:"M.Tech", photo:"b-ravi-kumar" },
     ], tags:[] },
   { code:"SF-02", floor:"second", type:"office", title:"Faculty Cabin", occupants:[
-      { name:"Dr. K. Kiran Kumar", designation:"Faculty", qualification:"M.Tech, Ph.D.", photo:"k-kiran-kumar" },
+      { name:"Dr. K. Kiran Kumar", designation:"Professor", qualification:"M.Tech, Ph.D.", photo:"k-kiran-kumar" },
     ], tags:[] },
   { code:"SF-03", floor:"second", type:"office", title:"Faculty Cabin", occupants:[
-      { name:"T. Jagan Mohana Rao", designation:"Faculty", qualification:"M.Tech (Ph.D.)", photo:"t-jagan-mohana-rao" },
+      { name:"T. Jagan Mohana Rao", designation:"Assistant Professor", qualification:"M.Tech (Ph.D.)", photo:"t-jagan-mohana-rao" },
     ], tags:[] },
   { code:"SF-04", floor:"second", type:"office", title:"Faculty Cabin", occupants:[
-      { name:"Dr. P.K. Gouda", designation:"Faculty", qualification:"M.Tech, Ph.D.", photo:"pk-gouda" },
+      { name:"Dr. P.K. Gouda", designation:"Professor", qualification:"M.Tech, Ph.D.", photo:"pk-gouda" },
     ], tags:[] },
   { code:"SF-05", floor:"second", type:"office", title:"Faculty Cabin", occupants:[
-      { name:"N. Tejeswararao", designation:"Faculty", qualification:"M.Tech", photo:"n-tejeswararao" },
+      { name:"N. Tejeswararao", designation:"Associate Professor", qualification:"M.Tech", photo:"n-tejeswararao" },
     ], tags:[] },
   { code:"SF-06", floor:"second", type:"office", title:"Faculty Cabin", occupants:[
       { name:"Kalla Kanakaraju", designation:"Assistant Professor", qualification:"M.Tech", photo:"k-kanakaraju" },
     ], tags:[] },
   { code:"SF-07", floor:"second", type:"office", title:"Faculty Cabin", occupants:[
-      { name:"Dr. G. Ramarao", designation:"Faculty", qualification:"M.Tech, Ph.D.", photo:"g-ramarao" },
-      { name:"Ch. Prasad", designation:"Faculty", qualification:"M.Tech, Ph.D.", photo:"ch-prasad" },
+      { name:"Dr. G. Ramarao", designation:"Assistant Professor", qualification:"M.Tech, Ph.D.", photo:"g-ramarao" },
+      { name:"Ch. Prasad", designation:"Assistant Professor", qualification:"M.Tech, Ph.D.", photo:"ch-prasad" },
     ], tags:[] },
   { code:"SF-08", floor:"second", type:"office", title:"Examination Cell", occupants:[], tags:["examination","exam cell"] },
   { code:"SF-09", floor:"second", type:"facility", title:"Women's Waiting Hall", occupants:[], tags:["waiting hall","women"] },
