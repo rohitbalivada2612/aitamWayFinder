@@ -1,5 +1,5 @@
 /* =========================================================================
-   EEE WAYFINDER — BEHAVIOUR
+   EEE WAYFINDER - BEHAVIOUR
    Everything here reads from data.js. No data is hard-coded in this file.
    ========================================================================= */
 
@@ -43,9 +43,6 @@
     return (FLOORS.find(f => f.key === key) || {}).label || key;
   }
 
-  // Builds a plain-language direction sentence from the room's position
-  // in the corridor sequence — this is generated, not hand-written per room,
-  // so it never drifts out of sync with the data.
   function directionText(room){
     const order = FLOOR_ORDER[room.floor];
     const i = order.indexOf(room.code);
@@ -55,11 +52,10 @@
     const prev = order[i-1];
     const prevRoom = ROOMS.find(r => r.code === prev);
     const prevName = prevRoom ? prevRoom.title : prev;
-    return `On the ${fl}, continue past ${prev} (${prevName}) — ${room.code} is the very next door.`;
+    return `On the ${fl}, continue past ${prev} (${prevName}) - ${room.code} is the very next door.`;
   }
 
   function avatarHTML(person){
-    // Looks for assets/faculty/<photo>.png, falls back to initials if missing.
     if(!person) return "";
     const img = `${person.photo}.png`;
     return `<span class="avatar" data-fallback="${initials(person.name)}">
@@ -67,8 +63,6 @@
            onerror="var el=this.parentElement; if(el){ el.innerHTML=el.dataset.fallback; }">
     </span>`;
   }
-
-  // -------------------------------------------------------- search index
 
   function buildSearchIndex(){
     const idx = [];
@@ -103,8 +97,6 @@
       .slice(0, 8);
   }
 
-  // ------------------------------------------------------------- stats
-
   function renderStats(){
     const facultyEl = $("#statFaculty");
     const roomsEl = $("#statRooms");
@@ -113,8 +105,6 @@
     if(roomsEl) roomsEl.textContent = ROOMS.length;
     if(floorsEl) floorsEl.textContent = FLOORS.length;
   }
-
-  // ------------------------------------------------------------- render
 
   function renderFacultyGrid(){
     const grid = $("#facultyGrid");
@@ -158,7 +148,7 @@
       activeFloor = btn.dataset.floor;
       renderFloorDeck();
       renderDirectoryBoard();
-    }, { once:true }); // re-bound each render since panel.innerHTML is replaced
+    }, { once:true });
   }
 
   function renderDirectoryBoard(){
@@ -192,8 +182,6 @@
     `).join("");
   }
 
-  // ------------------------------------------------------------- detail
-
   function renderCorridor(room){
     const order = FLOOR_ORDER[room.floor];
     return order.map(code => {
@@ -206,6 +194,308 @@
           <span class="code">${code}</span>
         </div>`;
     }).join("");
+  }
+
+  let activeRouteGallery = null;
+
+  const ROUTE_IMAGE_MAP = {
+    "GF-01": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-gf-01-step-2.jpg", label:"Way to GF-01" },
+      { src:"dummy-gf-01-step-3.jpg", label:"Outside GF-01" },
+    ],
+    "GF-02": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-gf-02-step-2.jpg", label:"Way to GF-02" },
+      { src:"dummy-gf-02-step-3.jpg", label:"Outside GF-02" },
+    ],
+    "GF-03": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-gf-03-step-2.jpg", label:"Way to GF-03" },
+      { src:"dummy-gf-03-step-3.jpg", label:"Outside GF-03" },
+    ],
+    "GF-04": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-gf-04-step-2.jpg", label:"Way to GF-04" },
+      { src:"dummy-gf-04-step-3.jpg", label:"Outside GF-04" },
+    ],
+    "GF-05": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-gf-05-step-2.jpg", label:"Way to GF-05" },
+      { src:"dummy-gf-05-step-3.jpg", label:"Outside GF-05" },
+    ],
+    "GF-06": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-gf-06-step-2.jpg", label:"Way to GF-06" },
+      { src:"dummy-gf-06-step-3.jpg", label:"Outside GF-06" },
+    ],
+    "GF-07": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-gf-07-step-2.jpg", label:"Way to GF-07" },
+      { src:"dummy-gf-07-step-3.jpg", label:"Outside GF-07" },
+    ],
+    "GF-08": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-gf-08-step-2.jpg", label:"Way to GF-08" },
+      { src:"dummy-gf-08-step-3.jpg", label:"Outside GF-08" },
+    ],
+    "GF-09": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-gf-09-step-2.jpg", label:"Way to GF-09" },
+      { src:"dummy-gf-09-step-3.jpg", label:"Outside GF-09" },
+    ],
+    "GF-10": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-gf-10-step-2.jpg", label:"Way to GF-10" },
+      { src:"dummy-gf-10-step-3.jpg", label:"Outside GF-10" },
+    ],
+
+    "FF-01": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-01-step-2.jpg", label:"Way to FF-01" },
+      { src:"dummy-ff-01-step-3.jpg", label:"Outside FF-01" },
+    ],
+    "FF-02": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-02-step-2.jpg", label:"Way to FF-02" },
+      { src:"dummy-ff-02-step-3.jpg", label:"Outside FF-02" },
+    ],
+    "FF-03": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-03-step-2.jpg", label:"Way to FF-03" },
+      { src:"dummy-ff-03-step-3.jpg", label:"Outside FF-03" },
+    ],
+    "FF-04": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-04-step-2.jpg", label:"Way to FF-04" },
+      { src:"dummy-ff-04-step-3.jpg", label:"Outside FF-04" },
+    ],
+    "FF-05": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-05-step-2.jpg", label:"Way to FF-05" },
+      { src:"dummy-ff-05-step-3.jpg", label:"Outside FF-05" },
+    ],
+    "FF-06": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-06-step-2.jpg", label:"Way to FF-06" },
+      { src:"dummy-ff-06-step-3.jpg", label:"Outside FF-06" },
+    ],
+    "FF-07": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-07-step-2.jpg", label:"Way to FF-07" },
+      { src:"dummy-ff-07-step-3.jpg", label:"Outside FF-07" },
+    ],
+    "FF-08": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-08-step-2.jpg", label:"Way to FF-08" },
+      { src:"dummy-ff-08-step-3.jpg", label:"Outside FF-08" },
+    ],
+    "FF-09": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-09-step-2.jpg", label:"Way to FF-09" },
+      { src:"dummy-ff-09-step-3.jpg", label:"Outside FF-09" },
+    ],
+    "FF-10": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-10-step-2.jpg", label:"Way to FF-10" },
+      { src:"dummy-ff-10-step-3.jpg", label:"Outside FF-10" },
+    ],
+    "FF-11": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-11-step-2.jpg", label:"Way to FF-11" },
+      { src:"dummy-ff-11-step-3.jpg", label:"Outside FF-11" },
+    ],
+    "FF-12": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-12-step-2.jpg", label:"Way to FF-12" },
+      { src:"dummy-ff-12-step-3.jpg", label:"Outside FF-12" },
+    ],
+    "FF-13": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-13-step-2.jpg", label:"Way to FF-13" },
+      { src:"dummy-ff-13-step-3.jpg", label:"Outside FF-13" },
+    ],
+    "FF-14": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-14-step-2.jpg", label:"Way to FF-14" },
+      { src:"dummy-ff-14-step-3.jpg", label:"Outside FF-14" },
+    ],
+    "FF-15": [
+      { src:"entrance.jpg", label:"Take left side stairs to reach FF-15" },
+      { src:"left-side-steps-to-ff.jpg", label:"Take immediate left to see FF-15" },
+      { src:"edc-cs-lab.jpg", label:"Here you can see FF-15" },
+    ],
+    "FF-16": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-16-step-2.jpg", label:"Way to FF-16" },
+      { src:"dummy-ff-16-step-3.jpg", label:"Outside FF-16" },
+    ],
+    "FF-17": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-17-step-2.jpg", label:"Way to FF-17" },
+      { src:"dummy-ff-17-step-3.jpg", label:"Outside FF-17" },
+    ],
+    "FF-18": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-ff-18-step-2.jpg", label:"Way to FF-18" },
+      { src:"dummy-ff-18-step-3.jpg", label:"Outside FF-18" },
+    ],
+
+    "SF-01": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-01-step-2.jpg", label:"Way to SF-01" },
+      { src:"dummy-sf-01-step-3.jpg", label:"Outside SF-01" },
+    ],
+    "SF-02": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-02-step-2.jpg", label:"Way to SF-02" },
+      { src:"dummy-sf-02-step-3.jpg", label:"Outside SF-02" },
+    ],
+    "SF-03": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-03-step-2.jpg", label:"Way to SF-03" },
+      { src:"dummy-sf-03-step-3.jpg", label:"Outside SF-03" },
+    ],
+    "SF-04": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-04-step-2.jpg", label:"Way to SF-04" },
+      { src:"dummy-sf-04-step-3.jpg", label:"Outside SF-04" },
+    ],
+    "SF-05": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-05-step-2.jpg", label:"Way to SF-05" },
+      { src:"dummy-sf-05-step-3.jpg", label:"Outside SF-05" },
+    ],
+    "SF-06": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-06-step-2.jpg", label:"Way to SF-06" },
+      { src:"dummy-sf-06-step-3.jpg", label:"Outside SF-06" },
+    ],
+    "SF-07": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-07-step-2.jpg", label:"Way to SF-07" },
+      { src:"dummy-sf-07-step-3.jpg", label:"Outside SF-07" },
+    ],
+    "SF-08": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-08-step-2.jpg", label:"Way to SF-08" },
+      { src:"dummy-sf-08-step-3.jpg", label:"Outside SF-08" },
+    ],
+    "SF-09": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-09-step-2.jpg", label:"Way to SF-09" },
+      { src:"dummy-sf-09-step-3.jpg", label:"Outside SF-09" },
+    ],
+    "SF-10": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-10-step-2.jpg", label:"Way to SF-10" },
+      { src:"dummy-sf-10-step-3.jpg", label:"Outside SF-10" },
+    ],
+    "SF-11": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-11-step-2.jpg", label:"Way to SF-11" },
+      { src:"dummy-sf-11-step-3.jpg", label:"Outside SF-11" },
+    ],
+    "SF-12": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-12-step-2.jpg", label:"Way to SF-12" },
+      { src:"dummy-sf-12-step-3.jpg", label:"Outside SF-12" },
+    ],
+    "SF-13": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-13-step-2.jpg", label:"Way to SF-13" },
+      { src:"dummy-sf-13-step-3.jpg", label:"Outside SF-13" },
+    ],
+    "SF-14": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-14-step-2.jpg", label:"Way to SF-14" },
+      { src:"dummy-sf-14-step-3.jpg", label:"Outside SF-14" },
+    ],
+    "SF-15": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-15-step-2.jpg", label:"Way to SF-15" },
+      { src:"dummy-sf-15-step-3.jpg", label:"Outside SF-15" },
+    ],
+    "SF-16": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-16-step-2.jpg", label:"Way to SF-16" },
+      { src:"dummy-sf-16-step-3.jpg", label:"Outside SF-16" },
+    ],
+    "SF-17": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-17-step-2.jpg", label:"Way to SF-17" },
+      { src:"dummy-sf-17-step-3.jpg", label:"Outside SF-17" },
+    ],
+    "SF-18": [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-sf-18-step-2.jpg", label:"Way to SF-18" },
+      { src:"dummy-sf-18-step-3.jpg", label:"Outside SF-18" },
+    ],
+  };
+
+  function routeImages(room){
+    return ROUTE_IMAGE_MAP[room.code] || [
+      { src:"entrance.jpg", label:"Entrance" },
+      { src:"dummy-route-step-2.jpg", label:`Way to ${room.code}` },
+      { src:"dummy-route-step-3.jpg", label:`Outside ${room.code}` },
+    ];
+  }
+
+  function renderRouteGallery(room){
+    const photos = routeImages(room);
+    return `
+      <div class="route-gallery" data-route-gallery>
+        <div class="route-gallery-head">
+          <div>
+            <div class="strip-label">Photo navigation</div>
+            <div class="route-caption" data-route-caption>${photos[0].label}</div>
+          </div>
+          <div class="route-count"><span data-route-current>1</span> / ${photos.length}</div>
+        </div>
+        <div class="route-frame">
+          ${photos.map((photo, i) => `
+            <figure class="route-slide ${i===0?'active':''}" data-route-slide>
+              <img src="${photo.src}" alt="${photo.label} for ${room.code}">
+              <figcaption>${photo.label}</figcaption>
+            </figure>
+          `).join("")}
+          <button class="route-nav route-prev" data-route-prev aria-label="Previous navigation photo">&#8249;</button>
+          <button class="route-nav route-next" data-route-next aria-label="Next navigation photo">&#8250;</button>
+        </div>
+        <div class="route-dots">
+          ${photos.map((photo, i) => `<button class="${i===0?'active':''}" data-route-dot="${i}" aria-label="Show ${photo.label}"></button>`).join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  function setupRouteGallery(room){
+    const gallery = $("[data-route-gallery]");
+    if(!gallery) return;
+
+    const photos = routeImages(room);
+    const slides = $$("[data-route-slide]", gallery);
+    const dots = $$("[data-route-dot]", gallery);
+    const caption = $("[data-route-caption]", gallery);
+    const current = $("[data-route-current]", gallery);
+    let active = 0;
+
+    function show(index){
+      active = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => slide.classList.toggle("active", i === active));
+      dots.forEach((dot, i) => dot.classList.toggle("active", i === active));
+      caption.textContent = photos[active].label;
+      current.textContent = active + 1;
+    }
+
+    $("[data-route-prev]", gallery).addEventListener("click", () => show(active - 1));
+    $("[data-route-next]", gallery).addEventListener("click", () => show(active + 1));
+    dots.forEach(dot => dot.addEventListener("click", () => show(Number(dot.dataset.routeDot))));
+
+    activeRouteGallery = {
+      previous: () => show(active - 1),
+      next: () => show(active + 1),
+    };
   }
 
   function openDetail(room, highlightPerson){
@@ -226,7 +516,7 @@
 
     $("#detailCard").innerHTML = `
       <div class="detail-head">
-        <button class="detail-close" id="detailClose" aria-label="Close">✕</button>
+        <button class="detail-close" id="detailClose" aria-label="Close">x</button>
         <span class="detail-plate">${room.code}</span>
         <h3>${room.title}</h3>
         <div class="floor-label">${floorLabel(room.floor)} · ${meta.label}</div>
@@ -236,6 +526,7 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>
           <span>${directionText(room)}</span>
         </div>
+        ${renderRouteGallery(room)}
         ${occupantsHTML}
         <div class="strip-label">${floorLabel(room.floor)} corridor map</div>
         <div class="corridor">${renderCorridor(room)}</div>
@@ -244,15 +535,15 @@
 
     overlay.classList.add("show");
     $("#detailClose").addEventListener("click", closeDetail);
+    setupRouteGallery(room);
     document.body.style.overflow = "hidden";
   }
 
   function closeDetail(){
     $("#overlay").classList.remove("show");
+    activeRouteGallery = null;
     document.body.style.overflow = "";
   }
-
-  // -------------------------------------------------------------- search UI
 
   function initSearch(){
     const input = $("#searchInput");
@@ -263,7 +554,7 @@
 
     function renderSuggestions(){
       if(!results.length){
-        list.innerHTML = `<div class="empty">No match yet — try a room code like <strong>FF-11</strong>, a faculty name, or a lab like <strong>Power Systems</strong>.</div>`;
+        list.innerHTML = `<div class="empty">No match yet - try a room code like <strong>FF-11</strong>, a faculty name, or a lab like <strong>Power Systems</strong>.</div>`;
         list.classList.add("show");
         return;
       }
@@ -354,10 +645,11 @@
     });
     document.addEventListener("keydown", (e) => {
       if(e.key === "Escape") closeDetail();
+      if(!$("#overlay").classList.contains("show") || !activeRouteGallery) return;
+      if(e.key === "ArrowLeft"){ e.preventDefault(); activeRouteGallery.previous(); }
+      if(e.key === "ArrowRight"){ e.preventDefault(); activeRouteGallery.next(); }
     });
   }
-
-  // ---------------------------------------------------------------- boot
 
   document.addEventListener("DOMContentLoaded", () => {
     renderStats();
